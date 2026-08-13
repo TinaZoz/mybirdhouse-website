@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import BenefitStrip from '../components/BenefitStrip.astro';
+import ProductLine from '../components/ProductLine.astro';
+import AiAssistant from '../components/AiAssistant.astro';
+import Showcases from '../components/Showcases.astro';
+import Comparison from '../components/Comparison.astro';
+import Pricing from '../components/Pricing.astro';
+import Credentials from '../components/Credentials.astro';
+import Faq from '../components/Faq.astro';
+import InstantQuote from '../components/InstantQuote.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+---
+
+<Layout>
+  <div class="min-h-screen bg-background">
+    <Header />
+    <main>
+      <Hero />
+      <BenefitStrip />
+      <ProductLine />
+      <AiAssistant />
+      <Showcases />
+      <Comparison />
+      <Pricing />
+      <Credentials />
+      <Faq />
+      <InstantQuote />
+    </main>
+    <Footer />
+    <StickyBar />
+  </div>
+</Layout>

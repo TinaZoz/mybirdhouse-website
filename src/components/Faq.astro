@@ -1,0 +1,146 @@
+---
+const faqs = [
+  {
+    id: 'assistant',
+    q: 'What is the AI Home Assistant?',
+    a: 'An optional add-on: a personal home manager in Telegram. Chat with your house in plain language — switch off outlets, arm security, schedule heating, ask for status reports — from anywhere in the world.',
+    x: 22, y: 46,
+  },
+  {
+    id: 'outage',
+    q: 'What happens in a power outage?',
+    a: 'The Safety package is battery-backed: the controller, network and all life-safety sensors (gas, CO2, smoke, leak) keep running, and shutoff valves still close automatically even if the grid and internet are both down.',
+    x: 50, y: 30,
+  },
+  {
+    id: 'wifi',
+    q: 'Does it all depend on my Wi-Fi?',
+    a: 'No. Comfort devices talk Zigbee / Matter on their own mesh, and the controller is hard-wired. If your internet drops, automations keep working inside the house — you just lose remote access until it\u2019s back.',
+    x: 74, y: 46,
+  },
+  {
+    id: 'rental',
+    q: 'I rent / own an apartment — can I still get this?',
+    a: 'Usually yes. The Apartment package (~16 devices) is built around no-drill, wireless devices that move with you. For strata buildings we help with the paperwork your council typically asks for.',
+    x: 30, y: 72,
+  },
+  {
+    id: 'timeline',
+    q: 'How long does installation take?',
+    a: 'Most apartments and townhouses are done in a single day; detached homes usually take two. Licensed subcontractors handle any panel or circuit work, and we leave the place cleaner than we found it.',
+    x: 56, y: 62,
+  },
+  {
+    id: 'ecosystem',
+    q: 'Will it work with Apple Home, Google or Alexa?',
+    a: 'Yes — the Comfort stack is Matter-based, so your lights, switches and thermostats show up natively in Apple Home, Google Home and Alexa. Voice control works alongside our own app and Telegram / WhatsApp.',
+    x: 82, y: 70,
+  },
+];
+---
+
+<section id="faq" class="bg-secondary/60 py-20 md:py-28">
+  <div class="mx-auto max-w-7xl px-5 md:px-8">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="text-sm font-bold uppercase tracking-[0.25em] text-accent">FAQs</p>
+      <h2 class="h-display mt-4 text-4xl md:text-6xl">
+        Tap the house.
+        <br />
+        <span class="font-script font-semibold tracking-normal text-accent">Ask anything.</span>
+      </h2>
+    </div>
+
+    <div class="mt-14 grid items-start gap-8 lg:grid-cols-5">
+      <div class="reveal relative lg:col-span-3">
+        <div class="overflow-hidden rounded-3xl shadow-2xl shadow-foreground/15">
+          <img src="/images/hero-banner.jpg" alt="Smart home diagram — tap a question mark to learn more" class="block w-full select-none" draggable="false" />
+          {faqs.map((f) => (
+            <button
+              class="faq-pin group absolute -translate-x-1/2 -translate-y-1/2"
+              data-id={f.id}
+              aria-label={f.q}
+              style={`left:${f.x}%;top:${f.y}%`}
+            >
+              <span class="faq-pulse absolute inset-0 rounded-full bg-accent pin-pulse"></span>
+              <span class="faq-dot relative flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-foreground text-background font-black shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:bg-accent group-hover:text-accent-foreground">
+                ?
+              </span>
+            </button>
+          ))}
+        </div>
+        <div class="mt-4 rounded-2xl border border-border bg-card p-5 shadow-lg lg:absolute lg:-bottom-6 lg:left-8 lg:right-8 lg:mt-0">
+          <div id="faq-answer-q" class="text-base font-black tracking-tight">{faqs[0].q}</div>
+          <p id="faq-answer-a" class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{faqs[0].a}</p>
+        </div>
+      </div>
+
+      <div class="reveal space-y-3 lg:col-span-2 lg:pt-2">
+        {faqs.map((f, i) => (
+          <button
+            class={`faq-item w-full rounded-2xl border p-5 text-left transition-all duration-300 ${i === 0 ? 'border-foreground bg-foreground text-background shadow-xl' : 'border-border bg-card hover:border-foreground/30'}`}
+            data-id={f.id}
+          >
+            <div class="flex items-center justify-between gap-4">
+              <span class="text-sm font-black tracking-tight md:text-base">{f.q}</span>
+              <span class={`faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${i === 0 ? 'bg-accent text-accent-foreground' : 'bg-secondary text-foreground'}`}>
+                {i === 0 ? '−' : '+'}
+              </span>
+            </div>
+            <p class="faq-body mt-3 text-sm leading-relaxed text-background/75" style={i === 0 ? '' : 'display:none'}>{f.a}</p>
+          </button>
+        ))}
+      </div>
+    </div>
+    <div class="hidden h-10 lg:block"></div>
+  </div>
+</section>
+
+<script define:vars={{ faqs }}>
+  let active = 'assistant';
+
+  function render() {
+    const item = faqs.find((f) => f.id === active);
+    document.getElementById('faq-answer-q').textContent = item.q;
+    document.getElementById('faq-answer-a').textContent = item.a;
+
+    document.querySelectorAll('.faq-pin').forEach((pin) => {
+      const isActive = pin.dataset.id === active;
+      const dot = pin.querySelector('.faq-dot');
+      const pulse = pin.querySelector('.faq-pulse');
+      pulse.style.display = isActive ? 'none' : '';
+      dot.classList.toggle('scale-110', isActive);
+      dot.classList.toggle('border-accent', isActive);
+      dot.classList.toggle('bg-accent', isActive);
+      dot.classList.toggle('text-accent-foreground', isActive);
+      dot.classList.toggle('bg-foreground', !isActive);
+      dot.classList.toggle('text-background', !isActive);
+    });
+
+    document.querySelectorAll('.faq-item').forEach((el) => {
+      const isActive = el.dataset.id === active;
+      el.classList.toggle('border-foreground', isActive);
+      el.classList.toggle('bg-foreground', isActive);
+      el.classList.toggle('text-background', isActive);
+      el.classList.toggle('shadow-xl', isActive);
+      el.classList.toggle('border-border', !isActive);
+      el.classList.toggle('bg-card', !isActive);
+
+      const icon = el.querySelector('.faq-icon');
+      icon.textContent = isActive ? '−' : '+';
+      icon.classList.toggle('bg-accent', isActive);
+      icon.classList.toggle('text-accent-foreground', isActive);
+      icon.classList.toggle('bg-secondary', !isActive);
+      icon.classList.toggle('text-foreground', !isActive);
+
+      const body = el.querySelector('.faq-body');
+      body.style.display = isActive ? '' : 'none';
+    });
+  }
+
+  document.querySelectorAll('.faq-pin, .faq-item').forEach((el) => {
+    el.addEventListener('click', () => {
+      active = el.dataset.id;
+      render();
+    });
+  });
+</script>

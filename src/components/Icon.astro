@@ -1,0 +1,25 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface Props {
+  name: string;
+  class?: string;
+  strokeWidth?: number;
+}
+
+const { name, class: className = 'h-5 w-5', strokeWidth } = Astro.props;
+
+const iconPath = path.resolve('./node_modules/lucide-static/icons', `${name}.svg`);
+let svg = fs.readFileSync(iconPath, 'utf-8');
+
+// strip the license comment and hardcoded width/height so Tailwind classes control size
+svg = svg.replace(/<!--.*?-->\n?/s, '');
+svg = svg.replace(/\s(width|height|class)="[^"]*"/g, '');
+svg = svg.replace('<svg', `<svg class="${className}"`);
+if (strokeWidth) {
+  svg = svg.replace(/stroke-width="[^"]*"/, `stroke-width="${strokeWidth}"`);
+}
+---
+
+<Fragment set:html={svg} />

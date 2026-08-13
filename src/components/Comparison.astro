@@ -1,0 +1,81 @@
+---
+import Icon from './Icon.astro';
+
+const rows = [
+  ['What it is', 'An expensive remote control', 'A home that watches & predicts'],
+  ['Ecosystem', 'Vendor-locked, dealer-gated', 'Open — any brand, unified'],
+  ['Your data', 'Lives in their cloud', 'Stays in your house'],
+  ['Cost', 'High price + subscription forever', 'One-time — you own it'],
+  ['Changes', 'Call (and pay) the dealer', 'Do it yourself, it\u2019s yours'],
+];
+
+const pillars = [
+  { icon: 'blocks', title: 'Open ecosystem', text: 'The best device from any brand — Apple, Google, Amazon, Ecobee, Aqara, Sinop\u00e9 — unified into one system. Add anything later. No single company owns your home.' },
+  { icon: 'brain-circuit', title: 'Real intelligence', text: 'It predicts and protects — catches the leak at 2 a.m., flags the failing appliance, trims the bill. Not a glorified remote.' },
+  { icon: 'lock-keyhole', title: 'Real privacy', text: 'The brain lives in your house, not in someone\u2019s cloud. Use Alexa or Google if you like — your data never leaves your walls.' },
+  { icon: 'key-round', title: 'You own it', text: 'One-time price. No subscription, no dealer lock, no ransom for your own home. Ever.' },
+];
+---
+
+<section id="why-us" class="py-20 md:py-28">
+  <div class="mx-auto max-w-6xl px-5 md:px-8">
+    <div class="reveal mx-auto max-w-3xl text-center">
+      <p class="text-xs font-bold uppercase tracking-[0.3em] text-accent">Why us</p>
+      <h2 class="h-display mt-3 text-4xl md:text-6xl">Not a remote control.</h2>
+      <p class="font-script mt-2 text-3xl text-accent md:text-4xl">A home that thinks.</p>
+      <p class="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base">
+        Legacy systems are a $15–80k universal remote with a scene menu, vendor lock, and a
+        subscription that never ends. A smart home notices, predicts, and protects — and it
+        shouldn't rent you back your own house.
+      </p>
+    </div>
+
+    <div class="reveal mt-12 overflow-hidden rounded-3xl border border-border bg-card shadow-xl shadow-foreground/5">
+      <div class="grid grid-cols-[1.1fr_1fr_1fr]">
+        <div class="p-4 md:p-6"></div>
+        <div class="border-l border-border bg-secondary/60 p-4 text-center md:p-6">
+          <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground md:text-sm">Legacy systems</p>
+          <p class="mt-0.5 text-[10px] text-muted-foreground/70 md:text-xs">Control4 · Savant · Vivint</p>
+        </div>
+        <div class="border-l border-accent/20 bg-accent/[0.07] p-4 text-center md:p-6">
+          <p class="text-xs font-black uppercase tracking-wider text-accent md:text-sm">My Birdhouse</p>
+          <p class="mt-0.5 text-[10px] text-accent/70 md:text-xs">modern, open, yours</p>
+        </div>
+
+        {rows.map(([label, legacy, ours]) => (
+          <>
+            <div class="border-t border-border p-4 text-xs font-bold md:p-6 md:text-sm">{label}</div>
+            <div class="border-l border-t border-border bg-secondary/40 p-4 md:p-6">
+              <div class="flex items-start gap-2.5">
+                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-foreground/10">
+                  <Icon name="x" class="h-3 w-3 text-foreground/60" />
+                </span>
+                <span class="text-xs leading-snug text-muted-foreground md:text-sm">{legacy}</span>
+              </div>
+            </div>
+            <div class="border-l border-t border-accent/20 bg-accent/[0.07] p-4 md:p-6">
+              <div class="flex items-start gap-2.5">
+                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground">
+                  <Icon name="check" class="h-3 w-3" />
+                </span>
+                <span class="text-xs font-semibold leading-snug md:text-sm">{ours}</span>
+              </div>
+            </div>
+          </>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {pillars.map((p) => (
+        <div class="reveal group rounded-3xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/10">
+          <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-accent-foreground">
+            <Icon name={p.icon} class="h-6 w-6" />
+          </span>
+          <h3 class="mt-4 text-lg font-black tracking-tight">{p.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro';
+---
+
+<div id="sticky-bar" class="fixed inset-x-0 bottom-0 z-40 translate-y-full transition-transform duration-500">
+  <div class="border-t border-background/10 bg-foreground/95 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3.5 md:px-8">
+      <p class="hidden text-sm font-bold text-background sm:block">Transparent pricing · hardware at cost</p>
+      <p class="text-sm font-bold text-background sm:hidden">Get your price</p>
+      <a href="#quote" class="btn-pill bg-accent px-5 py-2.5 text-sm text-accent-foreground shadow-lg shadow-accent/25">
+        Get my price in 2 minutes
+        <Icon name="arrow-right" class="h-4 w-4" />
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const bar = document.getElementById('sticky-bar');
+  const onScroll = () => {
+    const y = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const nearBottom = y > max - window.innerHeight * 0.5;
+    const visible = y > window.innerHeight * 0.9 && !nearBottom;
+    bar?.classList.toggle('translate-y-0', visible);
+    bar?.classList.toggle('translate-y-full', !visible);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

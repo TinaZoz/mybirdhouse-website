@@ -1,0 +1,90 @@
+---
+import Icon from './Icon.astro';
+
+const rows: { label: string; values: string[]; bold?: boolean }[] = [
+  { label: 'Baseline (fixed — all dwellings)', values: ['$800', '— " —', '— " —'] },
+  { label: 'Energy', values: ['$700', '$700', '$1,400'] },
+  { label: 'Comfort', values: ['$500', '$700', '$1,200'] },
+  { label: 'Safety', values: ['$500', '$700', '$1,100'] },
+  { label: 'Hardware at-cost (sum)', values: ['$2,500', '$2,900', '$4,500'], bold: true },
+  { label: 'Hardware + 15% handling', values: ['$2,900', '$3,400', '$5,200'] },
+  { label: 'Integration ($2,000 + $80/device)', values: ['$3,300', '$3,800', '$5,200'] },
+  { label: 'Licensed labor (pass-through)', values: ['$1,200', '$1,500', '$2,500'] },
+  { label: 'BC GST 5% (markup + integration)', values: ['~$200', '~$200', '~$300'] },
+  { label: 'Customer one-time total', values: ['$7,600', '$8,900', '$13,200'], bold: true },
+];
+
+const columns = [
+  { name: 'Apartment', note: '~16 devices' },
+  { name: 'Townhouse', note: '~22 devices · real install' },
+  { name: 'Detached', note: '~39 devices' },
+];
+---
+
+<section id="pricing" class="bg-foreground py-20 text-background md:py-28">
+  <div class="mx-auto max-w-7xl px-5 md:px-8">
+    <div class="reveal mx-auto max-w-3xl text-center">
+      <p class="text-sm font-bold uppercase tracking-[0.25em] text-accent">How much</p>
+      <h2 class="h-display mt-4 text-4xl md:text-6xl">
+        Transparent pricing.
+        <br />
+        <span class="font-script font-semibold tracking-normal text-accent">No mystery math.</span>
+      </h2>
+      <p class="mt-6 text-base leading-relaxed text-background/70 md:text-lg">
+        One-time price by package × dwelling. Hardware at cost, labor passed
+        through — you see exactly where every dollar goes.
+      </p>
+    </div>
+
+    <div class="reveal mt-14 overflow-hidden rounded-3xl bg-background text-foreground shadow-2xl">
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[680px] border-collapse text-sm">
+          <thead>
+            <tr class="border-b-2 border-foreground/10">
+              <th class="px-6 py-5 text-left text-xs font-bold uppercase tracking-widest text-muted-foreground">Package</th>
+              {columns.map((c, i) => (
+                <th class={`px-6 py-5 text-right ${i === 1 ? 'bg-accent/[0.07]' : ''}`}>
+                  <div class="text-base font-black tracking-tight">{c.name}</div>
+                  <div class="mt-0.5 text-xs font-semibold text-muted-foreground">{c.note}</div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r, ri) => {
+              const isTotal = r.label === 'Customer one-time total';
+              return (
+                <tr class={isTotal ? 'bg-foreground text-background' : ri % 2 ? 'bg-secondary/40' : ''}>
+                  <td class={`px-6 py-4 ${r.bold ? 'font-black' : 'font-semibold text-foreground/80'} ${isTotal ? 'text-base' : ''}`}>{r.label}</td>
+                  {r.values.map((v, vi) => (
+                    <td class={`px-6 py-4 text-right tabular-nums ${r.bold ? 'font-black' : 'font-semibold'} ${!isTotal && vi === 1 ? 'bg-accent/[0.07]' : ''} ${isTotal ? 'text-lg text-accent' : ''}`}>{v}</td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="reveal mt-6 flex flex-col items-start gap-3 rounded-2xl border border-background/15 bg-background/5 p-5 text-sm text-background/70 md:flex-row md:items-center">
+      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
+        <Icon name="info" class="h-[18px] w-[18px]" />
+      </span>
+      <p class="leading-relaxed">
+        <span class="font-bold text-background">Rough planning figures.</span>
+        Quotes are rounded up to the nearest $100; the Baseline is a fixed
+        foundation identical across dwellings. Hardware is bought at retail
+        (already taxed), GST applies to markup + integration only. Simple
+        one-time pricing — 3–6 month warranty included, then
+        custom-billed support. The AI Home Assistant is an optional add-on.
+      </p>
+    </div>
+
+    <div class="reveal mt-10 text-center">
+      <a href="#quote" class="btn-pill bg-accent px-8 py-4 text-base text-accent-foreground shadow-xl shadow-accent/25">
+        Get my exact price in 2 minutes
+      </a>
+    </div>
+  </div>
+</section>

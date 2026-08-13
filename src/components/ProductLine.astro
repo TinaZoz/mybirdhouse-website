@@ -1,0 +1,142 @@
+---
+import Icon from './Icon.astro';
+
+const products = [
+  {
+    icon: 'zap',
+    tag: 'WiFi',
+    name: 'Energy',
+    includes: 'Main controller, power monitor, smart thermostats (HVAC / baseboard), optional wall-mounted display',
+    value: ['Lower utility costs', 'Circuit-level monitoring', 'EV charger monitoring', 'Heat pump & baseboard optimization'],
+    live: true,
+  },
+  {
+    icon: 'sun',
+    tag: 'Zigbee / Matter',
+    name: 'Comfort',
+    includes: 'Wireless coordinator, smart relays, motion sensors, smart lights, switches & dimmers, IR controllers, AI & voice assistant, Telegram / WhatsApp integration',
+    value: ['Automated comfort', 'Occupancy-based control', 'Load management', 'Voice control'],
+    live: true,
+  },
+  {
+    icon: 'shield-check',
+    tag: 'Battery-backed',
+    name: 'Safety',
+    includes: 'Battery backup (controller + network), leak detectors, water shutoff valves, gas & CO2 detectors, gas shutoff, smoke detectors, doorbell, contact & glass-break sensors, indoor cameras',
+    value: ['Flood prevention', 'Gas safety', 'Property protection', 'Lower insurance risk'],
+    live: true,
+  },
+  {
+    icon: 'wifi',
+    tag: 'Coming soon',
+    name: 'Network',
+    includes: 'Internet, Wi-Fi mesh, structured cabling, switches, VPN / remote access, cellular backup',
+    value: [],
+    live: false,
+  },
+  {
+    icon: 'sprout',
+    tag: 'Coming soon',
+    name: 'Garden',
+    includes: 'Irrigation & sprinklers, weather station, soil & plant moisture sensors, greenhouse automation, outdoor lighting',
+    value: [],
+    live: false,
+  },
+  {
+    icon: 'store',
+    tag: 'Coming soon',
+    name: 'Commerce',
+    includes: 'Short-term rental management (Airbnb / VRBO), guest access, occupancy automation, revenue & utility tracking',
+    value: [],
+    live: false,
+  },
+];
+---
+
+<section id="overview" class="py-20 md:py-28">
+  <div class="mx-auto max-w-7xl px-5 md:px-8">
+    <div class="reveal max-w-3xl">
+      <p class="text-sm font-bold uppercase tracking-[0.25em] text-accent">What we install</p>
+      <h2 class="h-display mt-4 text-4xl md:text-6xl">
+        One home.
+        <br />
+        <span class="font-script font-semibold tracking-normal text-accent">Seven superpowers.</span>
+      </h2>
+      <p class="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+        Start with Energy, Comfort and Safety today — the rest of the lineup
+        plugs into the same controller when you're ready.
+      </p>
+      <p class="mt-3 max-w-xl text-sm font-semibold text-foreground/70">
+        + optional AI Home Assistant — a personal manager for your home in Telegram.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {products.map((p, i) => (
+        <div
+          class={`reveal group relative flex flex-col rounded-3xl border p-7 transition-all duration-300 ${
+            p.live
+              ? 'border-border bg-card hover:-translate-y-1.5 hover:border-foreground/25 hover:shadow-xl hover:shadow-foreground/10'
+              : 'border-dashed border-border bg-secondary/40'
+          }`}
+          style={`transition-delay: ${i * 60}ms`}
+        >
+          <div class="flex items-center justify-between">
+            <span class={`flex h-12 w-12 items-center justify-center rounded-2xl ${p.live ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground'}`}>
+              <Icon name={p.icon} class="h-6 w-6" strokeWidth={1.7} />
+            </span>
+            <span class={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider ${p.live ? 'bg-accent/10 text-accent' : 'bg-muted text-muted-foreground'}`}>
+              {p.tag}
+            </span>
+          </div>
+
+          <h3 class="mt-5 text-xl font-black tracking-tight">{p.name}</h3>
+          <p class="mt-2.5 flex-1 text-sm leading-relaxed text-muted-foreground">{p.includes}</p>
+
+          {p.value.length > 0 && (
+            <ul class="mt-4 space-y-1.5 border-t border-border pt-4">
+              {p.value.map((v) => (
+                <li class="flex items-center gap-2 text-sm font-semibold">
+                  <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+                  {v}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {p.live && (
+            <a href="#quote" class="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-foreground opacity-0 transition-all duration-300 hover:text-accent group-hover:opacity-100">
+              Get a quote <Icon name="arrow-right" class="h-4 w-4" />
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <a href="#assistant" class="reveal group mt-6 block overflow-hidden rounded-3xl bg-foreground text-background transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-foreground/25">
+      <div class="flex flex-col items-start gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-10">
+        <div class="flex items-start gap-5">
+          <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-accent text-accent-foreground">
+            <Icon name="bot-message-square" class="h-7 w-7" strokeWidth={1.7} />
+          </span>
+          <div>
+            <div class="flex flex-wrap items-center gap-3">
+              <h3 class="text-2xl font-black tracking-tight">AI Home Assistant</h3>
+              <span class="rounded-full bg-accent px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-accent-foreground">
+                Optional add-on
+              </span>
+            </div>
+            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-background/70 md:text-base">
+              Your personal home manager in Telegram — chat with your house,
+              give it tasks, switch off outlets or run a security check from
+              anywhere in the world.
+            </p>
+          </div>
+        </div>
+        <span class="btn-pill shrink-0 bg-accent px-6 py-3 text-sm text-accent-foreground shadow-lg shadow-accent/25">
+          Meet your assistant <Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </span>
+      </div>
+    </a>
+  </div>
+</section>

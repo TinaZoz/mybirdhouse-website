@@ -1,0 +1,87 @@
+---
+import Icon from './Icon.astro';
+
+const columns = [
+  {
+    title: 'Product line',
+    links: ['Energy', 'Comfort', 'Safety', 'AI Assistant', 'Network · soon', 'Garden · soon'],
+  },
+  {
+    title: 'Explore',
+    links: ['Showcases', 'Why us', 'How much', 'Credentials', 'FAQs', 'Instant quote'],
+  },
+];
+
+const hrefs: Record<string, string> = {
+  Energy: '#overview',
+  Comfort: '#overview',
+  Safety: '#overview',
+  'AI Assistant': '#assistant',
+  'Network · soon': '#overview',
+  'Garden · soon': '#overview',
+  Showcases: '#showcases',
+  'Why us': '#why-us',
+  'How much': '#pricing',
+  Credentials: '#proof',
+  FAQs: '#faq',
+  'Instant quote': '#quote',
+};
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-foreground pb-28 pt-16 text-background md:pb-32">
+  <div class="mx-auto max-w-7xl px-5 md:px-8">
+    <a href="#top" class="group block">
+      <div class="flex items-end gap-3 md:gap-4">
+        <img src="/images/logo-full-cream.png" alt="My Birdhouse — AI automated smart homes" class="h-14 w-auto md:h-20" draggable="false" />
+      </div>
+      <p class="mt-3 font-script text-2xl text-background/60 md:text-3xl">Smart living. Naturally.</p>
+    </a>
+
+    <div class="mt-12 grid gap-10 border-t border-background/10 pt-10 md:grid-cols-4">
+      {columns.map((col) => (
+        <div>
+          <div class="text-xs font-black uppercase tracking-widest text-background/50">{col.title}</div>
+          <ul class="mt-4 space-y-2.5">
+            {col.links.map((l) => (
+              <li>
+                <a href={hrefs[l]} class="text-sm font-semibold text-background/75 transition-colors hover:text-accent-hover">{l}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <div>
+        <div class="text-xs font-black uppercase tracking-widest text-background/50">Contact</div>
+        <ul class="mt-4 space-y-2.5 text-sm font-semibold text-background/75">
+          <li class="flex items-center gap-2">
+            <Icon name="mail" class="h-4 w-4 text-accent" /> info@mybirdhouse.ca
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="phone" class="h-4 w-4 text-accent" /> (236) 516-0675
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="map-pin" class="h-4 w-4 text-accent" /> Maple Ridge, BC, Canada
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="text-xs font-black uppercase tracking-widest text-background/50">Good to know</div>
+        <ul class="mt-4 space-y-2.5 text-sm font-semibold text-background/75">
+          <li>One-time pricing, no fees</li>
+          <li>Hardware at cost, always</li>
+          <li>Registered BC Sole Proprietorship</li>
+          <li>Electrical & plumbing done by licensed subcontractors</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col items-start justify-between gap-3 border-t border-background/10 pt-7 text-xs text-background/40 md:flex-row md:items-center">
+      <p>© {year} My Birdhouse — AI Automated Smart Homes, British Columbia.</p>
+      <p>Made among the cedars of BC.</p>
+    </div>
+  </div>
+</footer>

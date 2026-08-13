@@ -1,0 +1,105 @@
+---
+const links = [
+  { label: 'Overview', href: '#overview' },
+  { label: 'Showcases', href: '#showcases' },
+  { label: 'Why us', href: '#why-us' },
+  { label: 'How much', href: '#pricing' },
+  { label: 'Proof', href: '#proof' },
+  { label: 'FAQs', href: '#faq' },
+];
+---
+
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-4">
+  <div
+    id="nav-pill"
+    class="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/40 bg-white/45 py-2.5 pl-4 pr-3 shadow-md shadow-foreground/[0.05] backdrop-blur-xl transition-all duration-500 md:py-3 md:pl-6 md:pr-4"
+  >
+    <a href="#top" class="flex items-center gap-2">
+      <img
+        src="/images/logo-full.png"
+        alt="My Birdhouse — AI automated smart homes"
+        class="h-8 w-auto md:h-11"
+        draggable="false"
+      />
+    </a>
+
+    <nav class="hidden items-center gap-7 lg:flex">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class="text-lg font-semibold text-foreground/75 transition-colors hover:text-accent-hover"
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href="#quote"
+        class="btn-pill hidden border-2 border-foreground px-5 py-2 text-sm text-foreground hover:bg-foreground hover:text-background lg:inline-flex"
+      >
+        Instant Quote
+      </a>
+      <button
+        id="menu-toggle"
+        class="flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-foreground/5 lg:hidden"
+        aria-label="Toggle menu"
+      >
+        <svg id="icon-menu" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg id="icon-close" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="mx-auto mt-2 hidden max-w-6xl rounded-3xl border border-foreground/10 bg-white/80 p-3 shadow-xl shadow-foreground/10 backdrop-blur-xl lg:hidden"
+  >
+    <nav class="flex flex-col gap-1">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class="mobile-link rounded-2xl px-4 py-3 text-sm font-semibold text-foreground/80 transition-colors hover:bg-foreground/5"
+        >
+          {l.label}
+        </a>
+      ))}
+      <a href="#quote" class="mobile-link btn-dark mt-1 px-5 py-3 text-sm">
+        Instant Quote
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById('nav-pill');
+  const onScroll = () => {
+    if (!nav) return;
+    if (window.scrollY > 24) {
+      nav.classList.remove('border-white/40', 'bg-white/45', 'shadow-md', 'shadow-foreground/[0.05]');
+      nav.classList.add('border-foreground/10', 'bg-white/70', 'shadow-lg', 'shadow-foreground/[0.08]');
+    } else {
+      nav.classList.add('border-white/40', 'bg-white/45', 'shadow-md', 'shadow-foreground/[0.05]');
+      nav.classList.remove('border-foreground/10', 'bg-white/70', 'shadow-lg', 'shadow-foreground/[0.08]');
+    }
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+  const setOpen = (open: boolean) => {
+    menu?.classList.toggle('hidden', !open);
+    iconMenu?.classList.toggle('hidden', open);
+    iconClose?.classList.toggle('hidden', !open);
+  };
+  toggle?.addEventListener('click', () => {
+    setOpen(menu?.classList.contains('hidden') ?? false);
+  });
+  document.querySelectorAll('.mobile-link').forEach((a) => {
+    a.addEventListener('click', () => setOpen(false));
+  });
+</script>
