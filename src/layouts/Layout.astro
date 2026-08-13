@@ -17,7 +17,9 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/images/logo-icon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -25,6 +27,28 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:image" content="/images/hero-banner.jpg" />
     <meta property="og:type" content="website" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'HomeAndConstructionBusiness',
+      name: 'My Birdhouse',
+      description: 'AI-automated smart home integration and consulting in British Columbia — energy, comfort and safety systems.',
+      email: 'info@mybirdhouse.ca',
+      telephone: '+1-236-516-0675',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Maple Ridge',
+        addressRegion: 'BC',
+        addressCountry: 'CA',
+      },
+      areaServed: {
+        '@type': 'State',
+        name: 'British Columbia',
+      },
+      url: 'https://mybirdhouse.ca',
+      priceRange: '$$',
+    })} />
   </head>
   <body>
     <slot />
