@@ -1,194 +1,64 @@
 ---
 import Icon from './Icon.astro';
-
-const BASELINE = 800;
-
-const packages = [
-  { key: 'energy', name: 'Energy', prices: { apartment: 700, townhouse: 700, detached: 1400 }, blurb: 'Power monitor, smart thermostats, EV & circuit monitoring' },
-  { key: 'comfort', name: 'Comfort', prices: { apartment: 500, townhouse: 700, detached: 1200 }, blurb: 'Lighting, motion, switches, voice & AI assistant' },
-  { key: 'safety', name: 'Safety', prices: { apartment: 500, townhouse: 700, detached: 1100 }, blurb: 'Leak & gas protection, shutoff valves, battery backup' },
-];
-
-const dwellings = [
-  { key: 'apartment', name: 'Apartment', devices: 16 },
-  { key: 'townhouse', name: 'Townhouse', devices: 22 },
-  { key: 'detached', name: 'Detached', devices: 39 },
-];
-
-const totals = { apartment: 7600, townhouse: 8900, detached: 13200 };
 ---
 
 <section id="quote" class="py-20 md:py-28">
   <div class="mx-auto max-w-7xl px-5 md:px-8">
     <div class="reveal mx-auto max-w-2xl text-center">
-      <p class="text-sm font-bold uppercase tracking-[0.25em] text-accent">Instant quote</p>
+      <p class="text-sm font-bold uppercase tracking-[0.25em] text-accent">Get in touch</p>
       <h2 class="h-display mt-4 text-4xl md:text-6xl">
-        Your price in
+        Tell us about
         <br />
-        <span class="font-script font-semibold tracking-normal text-accent">2 minutes.</span>
+        <span class="font-script font-semibold tracking-normal text-accent">your home.</span>
       </h2>
+      <p class="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
+        A few details and we'll get back to you within one business day with next steps and pricing.
+      </p>
     </div>
 
-    <div class="reveal mx-auto mt-14 max-w-4xl rounded-3xl border border-border bg-card p-6 shadow-2xl shadow-foreground/10 md:p-10">
-      <div class="text-xs font-black uppercase tracking-widest text-muted-foreground">1 · Your home</div>
-      <div id="dwelling-grid" class="mt-3 grid grid-cols-3 gap-2 md:gap-3">
-        {dwellings.map((d, i) => (
-          <button
-            class={`dwelling-btn rounded-2xl border-2 px-3 py-4 text-center transition-all duration-300 ${i === 1 ? 'border-foreground bg-foreground text-background shadow-lg' : 'border-border hover:border-foreground/40'}`}
-            data-key={d.key}
-            data-devices={d.devices}
-          >
-            <div class="text-sm font-black md:text-base">{d.name}</div>
-            <div class="dwelling-note mt-0.5 text-[11px] font-semibold md:text-xs text-muted-foreground">~{d.devices} devices</div>
-          </button>
-        ))}
-      </div>
-
-      <div class="mt-8 text-xs font-black uppercase tracking-widest text-muted-foreground">2 · Your packages</div>
-      <div id="package-grid" class="mt-3 grid gap-2 md:grid-cols-3 md:gap-3">
-        {packages.map((p) => (
-          <button
-            class="package-btn rounded-2xl border-2 border-accent bg-accent/[0.06] p-4 text-left transition-all duration-300"
-            data-key={p.key}
-            data-prices={JSON.stringify(p.prices)}
-          >
-            <div class="flex items-center justify-between">
-              <span class="text-base font-black">{p.name}</span>
-              <span class="package-check flex h-6 w-6 items-center justify-center rounded-full bg-accent text-accent-foreground">
-                <Icon name="check" class="h-3.5 w-3.5" strokeWidth={3} />
-              </span>
-            </div>
-            <div class="mt-1 text-xs font-semibold leading-relaxed text-muted-foreground">{p.blurb}</div>
-            <div class="package-price mt-2 text-sm font-black text-accent">+${p.prices.townhouse.toLocaleString()}</div>
-          </button>
-        ))}
-      </div>
-
-      <div class="mt-8 flex flex-col gap-6 rounded-2xl bg-foreground p-6 text-background md:flex-row md:items-center md:justify-between md:p-8">
+    <div class="reveal mx-auto mt-14 max-w-xl rounded-3xl border border-border bg-card p-6 shadow-2xl shadow-foreground/10 md:p-10">
+      <form id="quote-form" action="https://formspree.io/f/xjyboglq" method="POST" class="flex flex-col gap-4">
         <div>
-          <div class="text-xs font-bold uppercase tracking-widest text-background/60">Rough one-time estimate</div>
-          <div class="mt-1 flex items-baseline gap-2">
-            <span id="estimate-value" class="text-4xl font-black tracking-tight text-accent md:text-5xl">~$8,900</span>
-            <span class="text-sm font-bold text-background/60">CAD</span>
-          </div>
-          <div id="estimate-note" class="mt-2 text-xs font-semibold text-background/50">Full system · Townhouse · rounded to nearest $100</div>
+          <label for="name" class="mb-1.5 block text-xs font-black uppercase tracking-widest text-muted-foreground">Name</label>
+          <input required type="text" name="name" id="name" placeholder="Your name" class="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-accent" />
         </div>
 
-        <form id="quote-form" action="https://formspree.io/f/xjyboglq" method="POST" class="flex w-full flex-col gap-2.5 md:max-w-xs">
-          <div class="relative">
-            <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-background/40">
-              <Icon name="mail" class="h-4 w-4" />
-            </span>
-            <input required type="email" name="email" placeholder="Email address" class="w-full rounded-full border border-background/15 bg-background/5 py-3 pl-11 pr-4 text-sm outline-none transition-colors placeholder:text-background/40 focus:border-accent" />
-          </div>
-          <div class="relative">
-            <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-background/40">
-              <Icon name="phone" class="h-4 w-4" />
-            </span>
-            <input type="tel" name="phone" placeholder="Phone (optional)" class="w-full rounded-full border border-background/15 bg-background/5 py-3 pl-11 pr-4 text-sm outline-none transition-colors placeholder:text-background/40 focus:border-accent" />
-          </div>
-          <input type="hidden" name="dwelling" id="form-dwelling" />
-          <input type="hidden" name="packages" id="form-packages" />
-          <input type="hidden" name="estimate" id="form-estimate" />
-          <input type="hidden" name="_subject" value="New quote request — My Birdhouse" />
-          <button type="submit" id="quote-submit" class="btn-pill bg-accent px-6 py-3.5 text-sm text-accent-foreground shadow-lg shadow-accent/25">
-            <Icon name="sparkles" class="h-4 w-4" />
-            Get my detailed quote
-            <Icon name="arrow-right" class="h-4 w-4" />
-          </button>
-        </form>
-      </div>
+        <div>
+          <label for="email" class="mb-1.5 block text-xs font-black uppercase tracking-widest text-muted-foreground">Email</label>
+          <input required type="email" name="email" id="email" placeholder="you@example.com" class="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-accent" />
+        </div>
 
-      <p id="quote-toast" class="mt-4 hidden rounded-xl bg-accent/10 p-3 text-center text-sm font-semibold text-accent"></p>
-      <p class="mt-4 text-center text-xs text-muted-foreground">
-        Free, no obligation. A local specialist confirms the final quote after a short virtual walkthrough.
-      </p>
+        <div>
+          <label for="phone" class="mb-1.5 block text-xs font-black uppercase tracking-widest text-muted-foreground">Phone (optional)</label>
+          <input type="tel" name="phone" id="phone" placeholder="(xxx) xxx-xxxx" class="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-accent" />
+        </div>
+
+        <div>
+          <label for="message" class="mb-1.5 block text-xs font-black uppercase tracking-widest text-muted-foreground">Message</label>
+          <textarea name="message" id="message" rows="4" placeholder="Tell us about your home and what you're looking for..." class="w-full resize-none rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-accent"></textarea>
+        </div>
+
+        <input type="hidden" name="_subject" value="New message — My Birdhouse website" />
+
+        <button type="submit" id="quote-submit" class="btn-dark mt-2 px-6 py-3.5 text-sm">
+          <Icon name="mail" class="h-4 w-4" />
+          Send message
+        </button>
+      </form>
+
+      <p id="quote-toast" class="mt-4 hidden rounded-xl p-3 text-center text-sm font-semibold"></p>
     </div>
   </div>
 </section>
 
-<script define:vars={{ BASELINE, packages, dwellings, totals }}>
-  let dwelling = 'townhouse';
-  let selected = ['energy', 'comfort', 'safety'];
-
-  function fullPackagesCost(dw) {
-    return BASELINE + packages.reduce((s, p) => s + p.prices[dw], 0);
-  }
-
-  function computeEstimate() {
-    const hardware = BASELINE + packages.reduce((s, p) => (selected.includes(p.key) ? s + p.prices[dwelling] : s), 0);
-    const full = fullPackagesCost(dwelling);
-    const scaled = full > 0 ? hardware / full : 0;
-    const raw = totals[dwelling] * scaled;
-    return Math.ceil(raw / 100) * 100;
-  }
-
-  function render() {
-    document.querySelectorAll('.dwelling-btn').forEach((btn) => {
-      const isActive = btn.dataset.key === dwelling;
-      btn.classList.toggle('border-foreground', isActive);
-      btn.classList.toggle('bg-foreground', isActive);
-      btn.classList.toggle('text-background', isActive);
-      btn.classList.toggle('shadow-lg', isActive);
-      btn.classList.toggle('border-border', !isActive);
-      const note = btn.querySelector('.dwelling-note');
-      note.classList.toggle('text-background/60', isActive);
-      note.classList.toggle('text-muted-foreground', !isActive);
-    });
-
-    document.querySelectorAll('.package-btn').forEach((btn) => {
-      const key = btn.dataset.key;
-      const on = selected.includes(key);
-      btn.classList.toggle('border-accent', on);
-      btn.classList.toggle('bg-accent/[0.06]', on);
-      btn.classList.toggle('opacity-60', !on);
-      const priceEl = btn.querySelector('.package-price');
-      const prices = JSON.parse(btn.dataset.prices);
-      priceEl.textContent = `+$${prices[dwelling].toLocaleString()}`;
-      const check = btn.querySelector('.package-check');
-      check.classList.toggle('bg-accent', on);
-      check.classList.toggle('text-accent-foreground', on);
-      check.classList.toggle('bg-muted', !on);
-      check.classList.toggle('text-muted-foreground', !on);
-    });
-
-    const estimate = computeEstimate();
-    document.getElementById('estimate-value').textContent = `~$${estimate.toLocaleString()}`;
-    const dw = dwellings.find((d) => d.key === dwelling);
-    const noteText =
-      (selected.length === 3 ? 'Full system' : selected.length === 0 ? 'Baseline only' : `${selected.length} package${selected.length > 1 ? 's' : ''} + baseline`) +
-      ` · ${dw.name} · rounded to nearest $100`;
-    document.getElementById('estimate-note').textContent = noteText;
-  }
-
-  document.querySelectorAll('.dwelling-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      dwelling = btn.dataset.key;
-      render();
-    });
-  });
-
-  document.querySelectorAll('.package-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const key = btn.dataset.key;
-      selected = selected.includes(key) ? selected.filter((k) => k !== key) : [...selected, key];
-      render();
-    });
-  });
-
-  const form = document.getElementById('quote-form');
-  const submitBtn = document.getElementById('quote-submit');
+<script>
+  const form = document.getElementById('quote-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('quote-submit') as HTMLButtonElement | null;
   const toast = document.getElementById('quote-toast');
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const estimate = computeEstimate();
-    const dw = dwellings.find((d) => d.key === dwelling);
-
-    document.getElementById('form-dwelling').value = dw.name;
-    document.getElementById('form-packages').value =
-      selected.length ? selected.map((k) => packages.find((p) => p.key === k)?.name).join(', ') : 'Baseline only';
-    document.getElementById('form-estimate').value = `~$${estimate.toLocaleString()} CAD`;
+    if (!submitBtn || !toast) return;
 
     submitBtn.disabled = true;
     submitBtn.classList.add('opacity-60');
@@ -201,7 +71,7 @@ const totals = { apartment: 7600, townhouse: 8900, detached: 13200 };
       });
 
       if (res.ok) {
-        toast.textContent = `Thanks! Your estimate: ~$${estimate.toLocaleString()} CAD — we'll send the detailed breakdown within one business day.`;
+        toast.textContent = "Thanks! We've received your message and will get back to you within one business day.";
         toast.classList.remove('hidden', 'bg-red-500/10', 'text-red-600');
         toast.classList.add('bg-accent/10', 'text-accent');
         form.reset();
@@ -209,7 +79,7 @@ const totals = { apartment: 7600, townhouse: 8900, detached: 13200 };
         throw new Error('Submission failed');
       }
     } catch {
-      toast.textContent = 'Something went wrong sending your request — please email info@mybirdhouse.ca directly.';
+      toast.textContent = 'Something went wrong sending your message — please email info@mybirdhouse.ca directly.';
       toast.classList.remove('hidden', 'bg-accent/10', 'text-accent');
       toast.classList.add('bg-red-500/10', 'text-red-600');
     } finally {
@@ -217,6 +87,4 @@ const totals = { apartment: 7600, townhouse: 8900, detached: 13200 };
       submitBtn.classList.remove('opacity-60');
     }
   });
-
-  render();
 </script>
