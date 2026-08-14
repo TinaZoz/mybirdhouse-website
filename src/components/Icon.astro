@@ -13,10 +13,13 @@ const { name, class: className = 'h-5 w-5', strokeWidth } = Astro.props;
 const iconPath = path.resolve('./node_modules/lucide-static/icons', `${name}.svg`);
 let svg = fs.readFileSync(iconPath, 'utf-8');
 
-// strip the license comment and hardcoded width/height so Tailwind classes control size
+// strip the license comment and hardcoded width/height/class from the ROOT <svg> tag only
+// (not from inner <rect>/<path> elements, which also use width/height for their own geometry)
 svg = svg.replace(/<!--.*?-->\n?/s, '');
-svg = svg.replace(/\s(width|height|class)="[^"]*"/g, '');
-svg = svg.replace('<svg', `<svg class="${className}"`);
+svg = svg.replace(/^(<svg)([^>]*)>/, (_match, tag, attrs) => {
+  const cleaned = attrs.replace(/\s(width|height|class)="[^"]*"/g, '');
+  return `${tag}${cleaned} class="${className}">`;
+});
 if (strokeWidth) {
   svg = svg.replace(/stroke-width="[^"]*"/, `stroke-width="${strokeWidth}"`);
 }
