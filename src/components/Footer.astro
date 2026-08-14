@@ -79,8 +79,13 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
-    <div class="mt-12 border-t border-background/10 pt-7 text-xs text-background/40">
+    <div class="mt-12 flex flex-col gap-4 border-t border-background/10 pt-7 text-xs text-background/40 md:flex-row md:items-center md:justify-between">
       <p>© {year} My Birdhouse — AI Automated Smart Homes, British Columbia.</p>
+      <div class="flex flex-wrap gap-x-5 gap-y-2">
+        <a href="/privacy-policy" class="font-semibold text-background/50 hover:text-accent-hover">Privacy Policy</a>
+        <a href="/terms" class="font-semibold text-background/50 hover:text-accent-hover">Terms & Conditions</a>
+        <a href="/cookies" class="font-semibold text-background/50 hover:text-accent-hover">Cookie Policy</a>
+      </div>
     </div>
   </div>
 </footer>
