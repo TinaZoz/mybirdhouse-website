@@ -2,12 +2,15 @@
 ---
 
 <section id="top" class="relative min-h-[640px] overflow-visible sm:min-h-0">
-  <img
-    src="/images/hero-banner.jpg"
-    alt="Smart living. Naturally. — AI automated smart home by My Birdhouse on a British Columbia lakeshore"
-    class="absolute inset-0 h-full w-full select-none object-cover sm:static sm:h-auto sm:w-full sm:object-none"
-    draggable="false"
-  />
+  <picture>
+    <source media="(min-width: 640px)" srcset="/images/hero-banner-desktop.jpg" />
+    <img
+      src="/images/hero-banner-mobile.jpg"
+      alt="Smart living. Naturally. — AI automated smart home by My Birdhouse on a British Columbia lakeshore"
+      class="absolute inset-0 h-full w-full select-none object-cover sm:static sm:h-auto sm:w-full sm:object-none"
+      draggable="false"
+    />
+  </picture>
 
   <div class="absolute left-[4%] top-[11%] max-w-[80%] text-left sm:left-[5%] sm:top-[15%] sm:max-w-[38%]">
     <div class="inline-block rounded-2xl bg-background/60 p-3 shadow-xl shadow-foreground/10 backdrop-blur-md sm:rounded-3xl sm:p-6">
