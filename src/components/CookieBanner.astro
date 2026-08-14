@@ -1,0 +1,46 @@
+<div
+  id="cookie-banner"
+  class="fixed inset-x-0 bottom-0 z-[60] hidden translate-y-full p-3 transition-transform duration-500 md:p-5"
+>
+  <div class="mx-auto flex max-w-3xl flex-col items-start gap-3 rounded-3xl border border-border bg-card p-5 shadow-2xl shadow-foreground/20 md:flex-row md:items-center md:justify-between md:p-6">
+    <p class="text-sm leading-relaxed text-foreground/80">
+      We use only minimal, essential cookies to keep this site secure and
+      running smoothly — no ad tracking, no analytics cookies.
+      <a href="/cookies" class="font-semibold text-accent hover:underline">Learn more</a>
+    </p>
+    <button id="cookie-accept" class="btn-dark w-full shrink-0 px-6 py-2.5 text-sm md:w-auto">
+      Got it
+    </button>
+  </div>
+</div>
+
+<script>
+  const KEY = 'mb-cookie-consent';
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('cookie-accept');
+
+  const hasConsented = () => {
+    try {
+      return localStorage.getItem(KEY) === 'accepted';
+    } catch {
+      return true; // if storage is blocked, don't nag the visitor
+    }
+  };
+
+  if (banner && !hasConsented()) {
+    banner.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      banner.classList.remove('translate-y-full');
+    });
+  }
+
+  acceptBtn?.addEventListener('click', () => {
+    try {
+      localStorage.setItem(KEY, 'accepted');
+    } catch {
+      /* ignore */
+    }
+    banner?.classList.add('translate-y-full');
+    setTimeout(() => banner?.classList.add('hidden'), 500);
+  });
+</script>
