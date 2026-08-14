@@ -8,7 +8,7 @@ const columns = [
   },
   {
     title: 'Explore',
-    links: ['Showcases', 'Why us', 'How much', 'Credentials', 'FAQs', 'Instant quote'],
+    links: ['Showcases', 'Why us', 'How much', 'Credentials', 'FAQs', 'Get in touch'],
   },
 ];
 
@@ -24,13 +24,13 @@ const hrefs: Record<string, string> = {
   'How much': '#pricing',
   Credentials: '#proof',
   FAQs: '#faq',
-  'Instant quote': '#quote',
+  'Get in touch': '#quote',
 };
 
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-foreground pb-28 pt-16 text-background md:pb-32">
+<footer class="bg-foreground pb-10 pt-16 text-background md:pb-12">
   <div class="mx-auto max-w-7xl px-5 md:px-8">
     <a href="#top" class="group block">
       <div class="flex items-end gap-3 md:gap-4">
@@ -79,9 +79,8 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
-    <div class="mt-12 flex flex-col items-start justify-between gap-3 border-t border-background/10 pt-7 text-xs text-background/40 md:flex-row md:items-center">
+    <div class="mt-12 border-t border-background/10 pt-7 text-xs text-background/40">
       <p>© {year} My Birdhouse — AI Automated Smart Homes, British Columbia.</p>
-      <p>Made among the cedars of BC.</p>
     </div>
   </div>
 </footer>
