@@ -8,13 +8,12 @@ const features = [
   { icon: 'plane', title: 'Works from anywhere', text: 'Airport, office, another continent — your home is one message away.' },
 ];
 
-const chat = [
-  { from: 'user', text: 'Hey, we just left for the airport — did I turn the iron off?', time: '14:02' },
-  { from: 'bot', text: 'Checked: the iron outlet is off. I also noticed the garage door is still open — closing it now.', time: '14:02' },
-  { from: 'user', text: 'Great. Switch the house to away mode and keep an eye on things', time: '14:03' },
-  { from: 'bot', text: 'Done. Away mode on: heating lowered to 17\u00b0, lights will simulate presence at dusk, all sensors armed. I\u2019ll ping you if anything moves.', time: '14:03' },
-  { from: 'user', text: 'And warm it up before we\u2019re back on Sunday, around 6 pm', time: '14:04' },
-  { from: 'bot', text: 'Scheduled. Sunday 6:00 pm — the house will be 22\u00b0 and the entry lights on. Have a good flight!', time: '14:04' },
+const showcases = [
+  { img: 'assistant-1.jpg', caption: 'Check in from anywhere', sub: 'Package arrived, garage closed, room warming up — one voice note, full answer.' },
+  { img: 'assistant-2.jpg', caption: 'One thread for the whole family', sub: 'Parents, kids, grandparents — everyone talks to the same home, in their own language.' },
+  { img: 'assistant-3.jpg', caption: 'Investigates, not just alerts', sub: 'A stain isn\u2019t a new leak — it tells you what it is, where it\u2019s from, and whether it\u2019s still active.' },
+  { img: 'assistant-4.jpg', caption: 'Catches problems while you sleep', sub: 'Water running 40 minutes straight at 2am — flagged, explained, with the shutoff location ready.' },
+  { img: 'assistant-5.jpg', caption: 'Explains the bill, not just the number', sub: 'Which room, which days, how much it cost — and offers to warn you next time.' },
 ];
 ---
 
@@ -55,52 +54,100 @@ const chat = [
         private, and core automations keep working even if the internet drops.
       </p>
 
-      <a href="#quote" class="btn-dark mt-8 inline-flex px-6 py-3 text-sm">Add it to my quote</a>
+      <a href="/#quote" class="btn-dark mt-8 inline-flex px-6 py-3 text-sm">Add it to my quote</a>
     </div>
 
     <div class="reveal">
-      <div class="overflow-hidden rounded-3xl border border-border bg-card shadow-2xl shadow-foreground/15">
-        <div class="flex items-center gap-3 border-b border-border bg-secondary/60 px-5 py-4">
-          <span class="relative flex h-11 w-11 items-center justify-center rounded-full bg-foreground text-background">
-            <Icon name="bot-message-square" class="h-5 w-5" />
-            <span class="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-card bg-emerald-500"></span>
-          </span>
-          <div>
-            <div class="text-sm font-black tracking-tight">Home Manager</div>
-            <div class="text-xs font-semibold text-muted-foreground">online · via Telegram</div>
+      <div id="assistant-carousel" class="relative mx-auto max-w-sm">
+        <div class="overflow-hidden rounded-3xl">
+          <div id="assistant-track" class="flex transition-transform duration-500 ease-out">
+            {showcases.map((s) => (
+              <div class="w-full shrink-0 px-1">
+                <img
+                  src={`/images/assistant/${s.img}`}
+                  alt={s.caption}
+                  class="w-full rounded-3xl shadow-2xl shadow-foreground/20"
+                  draggable="false"
+                />
+              </div>
+            ))}
           </div>
-          <Icon name="lock" class="ml-auto h-4 w-4 text-muted-foreground" />
         </div>
 
-        <div class="space-y-3 bg-secondary/30 px-4 py-5 md:px-5">
-          {chat.map((m) => (
-            <div class={`flex ${m.from === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div class={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed shadow-sm ${
-                m.from === 'user' ? 'rounded-br-md bg-foreground text-background' : 'rounded-bl-md border border-border bg-card'
-              }`}>
-                <p>{m.text}</p>
-                <div class={`mt-1 flex items-center justify-end gap-1 text-[10px] font-semibold ${m.from === 'user' ? 'text-background/50' : 'text-muted-foreground'}`}>
-                  {m.time}
-                  {m.from === 'user' ? (
-                    <Icon name="check-check" class="h-3 w-3 text-accent" />
-                  ) : (
-                    <Icon name="check" class="h-3 w-3" />
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
+        <button
+          id="assistant-prev"
+          aria-label="Previous example"
+          class="absolute left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-card/90 text-foreground shadow-lg backdrop-blur transition-transform hover:scale-105"
+        >
+          <Icon name="arrow-right" class="h-4 w-4 rotate-180" />
+        </button>
+        <button
+          id="assistant-next"
+          aria-label="Next example"
+          class="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-card/90 text-foreground shadow-lg backdrop-blur transition-transform hover:scale-105"
+        >
+          <Icon name="arrow-right" class="h-4 w-4" />
+        </button>
 
-          <div class="flex items-center gap-2 pt-2">
-            <div class="flex-1 rounded-full border border-border bg-card px-4 py-2.5 text-sm text-muted-foreground">
-              Message your home…
-            </div>
-            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accent-foreground">
-              <Icon name="send" class="h-4 w-4" />
-            </span>
-          </div>
+        <div class="mt-5 text-center">
+          <div id="assistant-caption" class="text-base font-black tracking-tight">{showcases[0].caption}</div>
+          <p id="assistant-sub" class="mx-auto mt-1.5 max-w-xs text-sm leading-relaxed text-muted-foreground">{showcases[0].sub}</p>
+        </div>
+
+        <div class="mt-4 flex justify-center gap-2">
+          {showcases.map((_, i) => (
+            <button
+              class="assistant-dot h-2 w-2 rounded-full bg-foreground/20 transition-all duration-300"
+              data-index={i}
+              aria-label={`Go to example ${i + 1}`}
+            />
+          ))}
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<script define:vars={{ showcases }}>
+  let index = 0;
+  const track = document.getElementById('assistant-track');
+  const caption = document.getElementById('assistant-caption');
+  const sub = document.getElementById('assistant-sub');
+  const dots = document.querySelectorAll('.assistant-dot');
+
+  function render() {
+    track.style.transform = `translateX(-${index * 100}%)`;
+    caption.textContent = showcases[index].caption;
+    sub.textContent = showcases[index].sub;
+    dots.forEach((d, i) => {
+      d.classList.toggle('bg-accent', i === index);
+      d.classList.toggle('w-6', i === index);
+      d.classList.toggle('bg-foreground/20', i !== index);
+    });
+  }
+
+  document.getElementById('assistant-prev')?.addEventListener('click', () => {
+    index = (index - 1 + showcases.length) % showcases.length;
+    render();
+  });
+  document.getElementById('assistant-next')?.addEventListener('click', () => {
+    index = (index + 1) % showcases.length;
+    render();
+  });
+  dots.forEach((d) => {
+    d.addEventListener('click', () => {
+      index = Number(d.dataset.index);
+      render();
+    });
+  });
+
+  let startX = 0;
+  track?.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+  track?.addEventListener('touchend', (e) => {
+    const diff = e.changedTouches[0].clientX - startX;
+    if (diff > 40) { index = (index - 1 + showcases.length) % showcases.length; render(); }
+    else if (diff < -40) { index = (index + 1) % showcases.length; render(); }
+  }, { passive: true });
+
+  render();
+</script>
