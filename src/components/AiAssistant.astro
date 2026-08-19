@@ -67,7 +67,7 @@ const showcases = [
           <div id="assistant-track" class="flex h-full transition-transform duration-500 ease-out">
             {showcases.map((s) => (
               <div class="h-full w-full shrink-0">
-                <button type="button" class="assistant-zoom block h-full w-full cursor-zoom-in" data-img={`/images/assistant/${s.img}`} aria-label={`Enlarge: ${s.caption}`}>
+                <button type="button" class="assistant-zoom block h-full w-full cursor-zoom-in" data-index={showcases.indexOf(s)} aria-label={`Enlarge: ${s.caption}`}>
                   <img
                     src={`/images/assistant/${s.img}`}
                     alt={s.caption}
@@ -131,7 +131,33 @@ const showcases = [
     >
       <Icon name="x" class="h-5 w-5" />
     </button>
-    <img id="assistant-lightbox-img" src="" alt="" class="max-h-[90vh] max-w-[95vw] rounded-2xl shadow-2xl" />
+
+    <button
+      id="assistant-lightbox-prev"
+      aria-label="Previous example"
+      class="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-background/10 text-background hover:bg-background/20 sm:left-5"
+    >
+      <Icon name="arrow-right" class="h-5 w-5 rotate-180" />
+    </button>
+    <button
+      id="assistant-lightbox-next"
+      aria-label="Next example"
+      class="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-background/10 text-background hover:bg-background/20 sm:right-5"
+    >
+      <Icon name="arrow-right" class="h-5 w-5" />
+    </button>
+
+    <img id="assistant-lightbox-img" src="" alt="" class="max-h-[90vh] max-w-[95vw] select-none rounded-2xl shadow-2xl" draggable="false" />
+
+    <div class="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
+      {showcases.map((_, i) => (
+        <button
+          class="assistant-lightbox-dot h-2 w-2 rounded-full bg-background/30 transition-all duration-300"
+          data-index={i}
+          aria-label={`Go to example ${i + 1}`}
+        />
+      ))}
+    </div>
   </div>
 </section>
 
@@ -181,25 +207,25 @@ const showcases = [
   const lightbox = document.getElementById('assistant-lightbox');
   const lightboxImg = document.getElementById('assistant-lightbox-img');
   const closeBtn = document.getElementById('assistant-lightbox-close');
+  const lightboxDots = document.querySelectorAll('.assistant-lightbox-dot');
 
-  document.querySelectorAll('.assistant-zoom').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      lightboxImg.src = btn.dataset.img;
-      lightboxImg.alt = btn.getAttribute('aria-label') || '';
-      lightbox.classList.remove('hidden');
-      lightbox.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  document.getElementById('assistant-zoom-hint')?.addEventListener('click', () => {
+  function updateLightbox() {
     const current = showcases[index];
     lightboxImg.src = `/images/assistant/${current.img}`;
     lightboxImg.alt = current.caption;
+    lightboxDots.forEach((d, i) => {
+      d.classList.toggle('bg-background', i === index);
+      d.classList.toggle('w-6', i === index);
+      d.classList.toggle('bg-background/30', i !== index);
+    });
+  }
+
+  function openLightbox() {
+    updateLightbox();
     lightbox.classList.remove('hidden');
     lightbox.classList.add('flex');
     document.body.style.overflow = 'hidden';
-  });
+  }
 
   function closeLightbox() {
     lightbox.classList.add('hidden');
@@ -207,11 +233,54 @@ const showcases = [
     document.body.style.overflow = '';
   }
 
+  function lightboxPrev() {
+    index = (index - 1 + showcases.length) % showcases.length;
+    render();
+    updateLightbox();
+  }
+
+  function lightboxNext() {
+    index = (index + 1) % showcases.length;
+    render();
+    updateLightbox();
+  }
+
+  document.querySelectorAll('.assistant-zoom').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      index = Number(btn.dataset.index);
+      render();
+      openLightbox();
+    });
+  });
+
+  document.getElementById('assistant-zoom-hint')?.addEventListener('click', openLightbox);
+
+  document.getElementById('assistant-lightbox-prev')?.addEventListener('click', lightboxPrev);
+  document.getElementById('assistant-lightbox-next')?.addEventListener('click', lightboxNext);
+  lightboxDots.forEach((d) => {
+    d.addEventListener('click', () => {
+      index = Number(d.dataset.index);
+      render();
+      updateLightbox();
+    });
+  });
+
   closeBtn?.addEventListener('click', closeLightbox);
   lightbox?.addEventListener('click', (e) => {
     if (e.target === lightbox) closeLightbox();
   });
   document.addEventListener('keydown', (e) => {
+    if (lightbox.classList.contains('hidden')) return;
     if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lightboxPrev();
+    if (e.key === 'ArrowRight') lightboxNext();
   });
+
+  let lightboxStartX = 0;
+  lightboxImg?.addEventListener('touchstart', (e) => { lightboxStartX = e.touches[0].clientX; }, { passive: true });
+  lightboxImg?.addEventListener('touchend', (e) => {
+    const diff = e.changedTouches[0].clientX - lightboxStartX;
+    if (diff > 40) lightboxPrev();
+    else if (diff < -40) lightboxNext();
+  }, { passive: true });
 </script>
