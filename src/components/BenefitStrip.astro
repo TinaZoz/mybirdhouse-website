@@ -13,7 +13,7 @@ const benefits = [
 <section class="reveal border-b border-border">
   <div class="mx-auto grid max-w-7xl grid-cols-2 items-start gap-x-6 gap-y-8 px-5 py-10 md:grid-cols-3 md:px-8 lg:grid-cols-5">
     {benefits.map((b, i) => (
-      <div class={`flex items-start gap-4 ${i > 0 ? 'lg:border-l lg:border-border lg:pl-8' : ''}`}>
+      <div class={`flex items-start gap-4 ${i > 0 ? 'lg:border-l lg:border-border lg:pl-8' : ''} ${i === 4 ? 'hidden md:flex' : ''}`}>
         <span class="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-foreground/15 text-foreground/75">
           <Icon name={b.icon} class="h-5 w-5" strokeWidth={1.5} />
         </span>
