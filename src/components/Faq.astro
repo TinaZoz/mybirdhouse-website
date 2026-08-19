@@ -1,71 +1,69 @@
 ---
-import Icon from './Icon.astro';
-
 const faqs = [
   {
     id: 'vivint',
-    icon: 'lock-keyhole',
     q: 'How is this different from Vivint, ADT or a security company?',
     a: 'Those charge $25\u201355/month forever just to keep using features you already paid for, and the hardware stays tied to their contract even after years of payments. My Birdhouse is one-time: you own the system outright, no monitoring contract, no multi-year financing agreement.',
   },
   {
     id: 'diy',
-    icon: 'store',
     q: 'Why not just buy things from Amazon or Costco myself?',
     a: 'You can \u2014 for one or two gadgets that\u2019s often the right call. Where DIY gets expensive is buying five things that don\u2019t talk to each other, or a hub that can\u2019t handle your panel. We design it once so everything works together, and we\u2019re the ones who show up if something doesn\u2019t.',
   },
   {
     id: 'control4',
-    icon: 'blocks',
     q: 'How do you compare to Control4 or Savant?',
     a: 'Similar idea \u2014 full integration, one system for the whole home \u2014 without the $15,000+ price tag or being locked to one dealer forever. You can add your own devices later; you\u2019re not stuck calling (or paying) us for every small change.',
   },
   {
     id: 'rebates',
-    icon: 'trending-down',
     q: 'Are there rebates or incentives I should know about?',
     a: 'Yes \u2014 BC Hydro is rolling out free smart thermostats this fall for homes with electric baseboard heating, plus ongoing FortisBC rebates on efficient equipment. We\u2019ll tell you what you qualify for and fold it into your install, so you\u2019re not leaving money on the table.',
   },
   {
     id: 'assistant',
-    icon: 'bot-message-square',
     q: 'What is the AI Home Assistant?',
     a: 'An optional add-on: a personal home manager in Telegram. Chat with your house in plain language \u2014 switch off outlets, arm security, schedule heating, ask for status reports \u2014 from anywhere in the world.',
   },
   {
+    id: 'warranty',
+    q: 'What if something breaks after the install?',
+    a: 'Every install includes a 3\u20136 month workmanship warranty, depending on package size. Hardware carries its own manufacturer warranty on top of that, and firmware updates are handled automatically wherever possible.',
+  },
+  {
     id: 'outage',
-    icon: 'zap',
     q: 'What happens in a power outage?',
     a: 'The Safety package is battery-backed: the controller, network and all life-safety sensors (gas, CO2, smoke, leak) keep running, and shutoff valves still close automatically even if the grid and internet are both down.',
   },
   {
     id: 'wifi',
-    icon: 'wifi',
     q: 'Does it all depend on my Wi-Fi?',
     a: 'No. Comfort devices talk Zigbee / Matter on their own mesh, and the controller is hard-wired. If your internet drops, automations keep working inside the house \u2014 you just lose remote access until it\u2019s back.',
   },
   {
     id: 'rental',
-    icon: 'house',
     q: 'I rent or own an apartment \u2014 can I still get this?',
     a: 'Usually yes. The Apartment package (~16 devices) is built around no-drill, wireless devices that move with you. For strata buildings we help with the paperwork your council typically asks for.',
   },
   {
+    id: 'moving',
+    q: 'Can I take the system with me if I move?',
+    a: 'Most Comfort and Safety devices are wireless and come with you. Anything hardwired \u2014 relays, the controller itself \u2014 stays with the home, but we can help plan an equivalent setup at your new place.',
+  },
+  {
+    id: 'timeline',
+    q: 'How long does installation take?',
+    a: 'Most apartments and townhouses are done in a single day; detached homes usually take two. Licensed subcontractors handle any panel or circuit work, and we leave the place cleaner than we found it.',
+  },
+  {
     id: 'ecosystem',
-    icon: 'smartphone',
     q: 'Will it work with Apple Home, Google or Alexa?',
     a: 'Yes \u2014 the Comfort stack is Matter-based, so your lights, switches and thermostats show up natively in Apple Home, Google Home and Alexa. Voice control works alongside our own app and Telegram / WhatsApp.',
   },
 ];
 
-const RADIUS = 152;
-const CENTER = 200;
-const nodes = faqs.map((f, i) => {
-  const angle = (i / faqs.length) * Math.PI * 2 - Math.PI / 2;
-  const x = CENTER + RADIUS * Math.cos(angle);
-  const y = CENTER + RADIUS * Math.sin(angle);
-  return { ...f, x, y };
-});
+const mid = Math.ceil(faqs.length / 2);
+const columns = [faqs.slice(0, mid), faqs.slice(mid)];
 ---
 
 <section id="faq" class="bg-secondary/60 py-20 md:py-28">
@@ -73,158 +71,51 @@ const nodes = faqs.map((f, i) => {
     <div class="reveal mx-auto max-w-2xl text-center">
       <p class="text-sm font-bold uppercase tracking-[0.25em] text-accent">FAQs</p>
       <h2 class="h-display mt-4 text-4xl md:text-6xl">
-        Tap the network.
+        Questions?
         <br />
-        <span class="font-script font-semibold tracking-normal text-accent">Ask anything.</span>
+        <span class="font-script font-semibold tracking-normal text-accent">Answered.</span>
       </h2>
     </div>
 
-    <div class="mt-14 grid items-start gap-8 lg:grid-cols-5">
-      <div class="reveal relative lg:col-span-2">
-        <div class="mx-auto aspect-square w-full max-w-[420px]">
-          <svg viewBox="0 0 400 400" class="h-full w-full" aria-hidden="true">
-            <defs>
-              <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.35" />
-                <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0" />
-              </radialGradient>
-            </defs>
-
-            <circle cx="200" cy="200" r="90" fill="url(#hubGlow)" />
-
-            {nodes.map((n) => (
-              <line
-                class="faq-line"
-                data-id={n.id}
-                x1="200" y1="200" x2={n.x} y2={n.y}
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-dasharray="4 5"
-                class:list={["faq-line", "text-foreground/20"]}
-              />
-            ))}
-
-            <circle cx="200" cy="200" r="40" class="fill-foreground" />
-            <circle cx="200" cy="200" r="40" class="fill-accent pin-pulse" opacity="0.35" />
-            <foreignObject x="176" y="176" width="48" height="48">
-              <div class="flex h-12 w-12 items-center justify-center text-background">
-                <Icon name="house" class="h-6 w-6" strokeWidth={1.8} />
+    <div class="mt-14 grid gap-4 md:grid-cols-2 md:gap-6">
+      {columns.map((col) => (
+        <div class="space-y-3">
+          {col.map((f) => (
+            <div class="faq-item reveal overflow-hidden rounded-2xl border border-border bg-card">
+              <button type="button" class="faq-toggle flex w-full items-center justify-between gap-4 p-5 text-left">
+                <span class="text-sm font-black tracking-tight md:text-base">{f.q}</span>
+                <span class="faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground transition-transform duration-300">
+                  +
+                </span>
+              </button>
+              <div class="faq-panel grid grid-rows-[0fr] transition-all duration-300">
+                <div class="overflow-hidden">
+                  <p class="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
+                </div>
               </div>
-            </foreignObject>
-
-            {nodes.map((n) => (
-              <g
-                class="faq-node cursor-pointer"
-                data-id={n.id}
-                transform={`translate(${n.x} ${n.y})`}
-              >
-                <circle r="26" class="faq-node-circle fill-card stroke-border transition-all duration-300" stroke-width="1.5" />
-                <foreignObject x="-13" y="-13" width="26" height="26">
-                  <div class="faq-node-icon flex h-[26px] w-[26px] items-center justify-center text-foreground/70 transition-colors duration-300">
-                    <Icon name={n.icon} class="h-4 w-4" strokeWidth={1.8} />
-                  </div>
-                </foreignObject>
-              </g>
-            ))}
-          </svg>
-        </div>
-
-        <div class="rounded-2xl border border-border bg-card p-5 shadow-lg">
-          <div id="faq-answer-q" class="text-base font-black tracking-tight">{faqs[0].q}</div>
-          <p id="faq-answer-a" class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{faqs[0].a}</p>
-        </div>
-      </div>
-
-      <div class="reveal space-y-3 lg:col-span-3 lg:pt-2">
-        {faqs.map((f, i) => (
-          <button
-            class={`faq-item w-full rounded-2xl border p-5 text-left transition-all duration-300 ${i === 0 ? 'border-foreground bg-foreground text-background shadow-xl' : 'border-border bg-card hover:border-foreground/30'}`}
-            data-id={f.id}
-          >
-            <div class="flex items-center justify-between gap-4">
-              <span class="text-sm font-black tracking-tight md:text-base">{f.q}</span>
-              <span class={`faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${i === 0 ? 'bg-accent text-accent-foreground' : 'bg-secondary text-foreground'}`}>
-                {i === 0 ? '\u2212' : '+'}
-              </span>
             </div>
-            <p class="faq-body mt-3 text-sm leading-relaxed text-background/75" style={i === 0 ? '' : 'display:none'}>{f.a}</p>
-          </button>
-        ))}
-      </div>
+          ))}
+        </div>
+      ))}
     </div>
   </div>
 </section>
 
-<style>
-  .faq-line {
-    animation: faq-flow 1.8s linear infinite;
-  }
-  @keyframes faq-flow {
-    to { stroke-dashoffset: -18; }
-  }
-  .faq-node-circle {
-    transform-box: fill-box;
-    transform-origin: center;
-  }
-  .faq-node:hover .faq-node-circle {
-    transform: scale(1.1);
-  }
-</style>
+<script>
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    const toggle = item.querySelector('.faq-toggle');
+    const panel = item.querySelector('.faq-panel');
+    const icon = item.querySelector('.faq-icon');
 
-<script define:vars={{ faqs }}>
-  let active = 'vivint';
-
-  function render() {
-    const item = faqs.find((f) => f.id === active);
-    document.getElementById('faq-answer-q').textContent = item.q;
-    document.getElementById('faq-answer-a').textContent = item.a;
-
-    document.querySelectorAll('.faq-line').forEach((line) => {
-      const isActive = line.dataset.id === active;
-      line.classList.toggle('text-accent', isActive);
-      line.classList.toggle('text-foreground/20', !isActive);
-      line.style.opacity = isActive ? '1' : '0.5';
-    });
-
-    document.querySelectorAll('.faq-node').forEach((node) => {
-      const isActive = node.dataset.id === active;
-      const circle = node.querySelector('.faq-node-circle');
-      const iconWrap = node.querySelector('.faq-node-icon');
-      circle.classList.toggle('fill-accent', isActive);
-      circle.classList.toggle('stroke-accent', isActive);
-      circle.classList.toggle('fill-card', !isActive);
-      circle.classList.toggle('stroke-border', !isActive);
-      iconWrap.classList.toggle('text-accent-foreground', isActive);
-      iconWrap.classList.toggle('text-foreground/70', !isActive);
-    });
-
-    document.querySelectorAll('.faq-item').forEach((el) => {
-      const isActive = el.dataset.id === active;
-      el.classList.toggle('border-foreground', isActive);
-      el.classList.toggle('bg-foreground', isActive);
-      el.classList.toggle('text-background', isActive);
-      el.classList.toggle('shadow-xl', isActive);
-      el.classList.toggle('border-border', !isActive);
-      el.classList.toggle('bg-card', !isActive);
-
-      const icon = el.querySelector('.faq-icon');
-      icon.textContent = isActive ? '\u2212' : '+';
-      icon.classList.toggle('bg-accent', isActive);
-      icon.classList.toggle('text-accent-foreground', isActive);
-      icon.classList.toggle('bg-secondary', !isActive);
-      icon.classList.toggle('text-foreground', !isActive);
-
-      const body = el.querySelector('.faq-body');
-      body.style.display = isActive ? '' : 'none';
-    });
-  }
-
-  document.querySelectorAll('.faq-node, .faq-item').forEach((el) => {
-    el.addEventListener('click', () => {
-      active = el.dataset.id;
-      render();
+    toggle?.addEventListener('click', () => {
+      const isOpen = panel.classList.contains('grid-rows-[1fr]');
+      panel.classList.toggle('grid-rows-[1fr]', !isOpen);
+      panel.classList.toggle('grid-rows-[0fr]', isOpen);
+      icon.textContent = isOpen ? '+' : '\u2212';
+      icon.classList.toggle('bg-accent', !isOpen);
+      icon.classList.toggle('text-accent-foreground', !isOpen);
+      icon.classList.toggle('bg-secondary', isOpen);
+      icon.classList.toggle('text-foreground', isOpen);
     });
   });
-
-  render();
 </script>
