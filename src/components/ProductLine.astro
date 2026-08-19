@@ -28,27 +28,27 @@ const products = [
   },
   {
     icon: 'wifi',
-    tag: 'Coming soon',
+    tag: 'Wi-Fi 6 / Mesh',
     name: 'Network',
     includes: 'Internet, Wi-Fi mesh, structured cabling, switches, VPN / remote access, cellular backup',
-    value: [],
-    live: false,
+    value: ['Whole-home Wi-Fi coverage', 'Wired backbone for reliability', 'Secure remote access', 'Cellular backup on outage'],
+    live: true,
   },
   {
     icon: 'sprout',
-    tag: 'Coming soon',
+    tag: 'Smart irrigation',
     name: 'Garden',
     includes: 'Irrigation & sprinklers, weather station, soil & plant moisture sensors, greenhouse automation, outdoor lighting',
-    value: [],
-    live: false,
+    value: ['Automated watering schedule', 'Soil moisture monitoring', 'Weather-aware adjustments', 'Outdoor lighting control'],
+    live: true,
   },
   {
     icon: 'store',
-    tag: 'Coming soon',
+    tag: 'Airbnb / VRBO',
     name: 'Commerce',
     includes: 'Short-term rental management (Airbnb / VRBO), guest access, occupancy automation, revenue & utility tracking',
-    value: [],
-    live: false,
+    value: ['Automated guest access', 'Occupancy-based automation', 'Revenue & utility tracking', 'Remote guest support'],
+    live: true,
   },
 ];
 ---
@@ -63,8 +63,8 @@ const products = [
         <span class="font-script font-semibold tracking-normal text-accent">Seven superpowers.</span>
       </h2>
       <p class="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
-        Start with Energy, Comfort and Safety today — the rest of the lineup
-        plugs into the same controller when you're ready.
+        Every package plugs into the same controller — mix and match
+        whichever your home needs, from day one.
       </p>
       <p class="mt-3 max-w-xl text-sm font-semibold text-foreground/70">
         + optional AI Home Assistant — a personal manager for your home in Telegram.
@@ -105,7 +105,7 @@ const products = [
           )}
 
           {p.live && (
-            <a href="#quote" class="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-foreground opacity-0 transition-all duration-300 hover:text-accent group-hover:opacity-100">
+            <a href="/#quote" class="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-foreground opacity-0 transition-all duration-300 hover:text-accent group-hover:opacity-100">
               Get a quote <Icon name="arrow-right" class="h-4 w-4" />
             </a>
           )}
@@ -113,7 +113,7 @@ const products = [
       ))}
     </div>
 
-    <a href="#assistant" class="reveal group mt-6 block overflow-hidden rounded-3xl bg-foreground text-background transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-foreground/25">
+    <a href="/#assistant" class="reveal group mt-6 block overflow-hidden rounded-3xl bg-foreground text-background transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-foreground/25">
       <div class="flex flex-col items-start gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-10">
         <div class="flex items-start gap-5">
           <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-accent text-accent-foreground">
