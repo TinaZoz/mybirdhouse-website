@@ -40,7 +40,7 @@ const showcases = [
 
 <section id="showcases">
   {showcases.map((s) => (
-    <div class={`relative overflow-hidden py-16 md:py-24 ${s.reverse ? 'bg-secondary/60' : ''}`}>
+    <div class={`relative overflow-hidden py-11 md:py-16 ${s.reverse ? 'bg-secondary/60' : ''}`}>
       <div class="mx-auto grid max-w-7xl items-center gap-10 px-5 md:px-8 lg:grid-cols-2 lg:gap-16">
         <div class={`reveal ${s.reverse ? 'lg:order-2' : ''}`}>
           <p class="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.25em] text-accent">
@@ -51,7 +51,7 @@ const showcases = [
             <br />
             <span class="font-script font-semibold tracking-normal text-accent">{s.script}</span>
           </h3>
-          <p class="mt-6 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">{s.text}</p>
+          <p class="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">{s.text}</p>
           <a href="#quote" class="btn-dark mt-8 inline-flex px-6 py-3 text-sm">Get a quote for my home</a>
         </div>
 
@@ -133,7 +133,7 @@ const showcases = [
           )}
         </div>
       </div>
-      <div class="h-14 md:h-16"></div>
+      <div class="h-10 md:h-11"></div>
     </div>
   ))}
 </section>
