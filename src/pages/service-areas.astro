@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+
+const primary = [
+  'Maple Ridge', 'Pitt Meadows', 'Mission', 'Coquitlam',
+  'Port Coquitlam', 'Port Moody', 'Langley',
+];
+
+const secondary = [
+  'Abbotsford', 'Surrey', 'New Westminster', 'Burnaby',
+  'Chilliwack', 'North Vancouver',
+];
+---
+
+<Layout
+  title="Service Areas — My Birdhouse"
+  description="Where My Birdhouse installs smart home systems: Maple Ridge, Pitt Meadows, Mission, the Tri-Cities, Langley, and the wider Fraser Valley, BC."
+>
+  <div class="min-h-screen bg-background">
+    <Header />
+    <main class="pt-32 pb-24 md:pt-40">
+      <div class="mx-auto max-w-5xl px-5 md:px-8">
+        <p class="text-sm font-bold uppercase tracking-[0.25em] text-accent">Where we work</p>
+        <h1 class="h-display mt-4 text-4xl md:text-6xl">
+          Serving the
+          <br />
+          <span class="font-script font-semibold tracking-normal text-accent">Fraser Valley.</span>
+        </h1>
+        <p class="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+          My Birdhouse is based in Maple Ridge, BC. As a one-person, founder-led
+          business, we keep our service area close to home so every install
+          gets a proper in-person walkthrough and the owner on-site — not a
+          rotating crew. Here's where that currently means:
+        </p>
+
+        <div class="mt-14 grid gap-8 md:grid-cols-2">
+          <div class="rounded-3xl border border-border bg-card p-7">
+            <h2 class="text-lg font-black uppercase tracking-wider text-accent">Core area</h2>
+            <p class="mt-1.5 text-sm text-muted-foreground">Usually same-week availability</p>
+            <ul class="mt-5 space-y-2.5">
+              {primary.map((city) => (
+                <li class="flex items-center gap-2.5 text-sm font-semibold">
+                  <Icon name="map-pin" class="h-4 w-4 text-accent" strokeWidth={2} />
+                  {city}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="rounded-3xl border border-dashed border-border bg-secondary/40 p-7">
+            <h2 class="text-lg font-black uppercase tracking-wider text-foreground/70">Also reachable</h2>
+            <p class="mt-1.5 text-sm text-muted-foreground">A bit further out — let's talk timing</p>
+            <ul class="mt-5 space-y-2.5">
+              {secondary.map((city) => (
+                <li class="flex items-center gap-2.5 text-sm font-semibold text-foreground/80">
+                  <Icon name="map-pin" class="h-4 w-4 text-muted-foreground" strokeWidth={2} />
+                  {city}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-10 rounded-2xl border border-border bg-secondary/50 p-5 text-sm leading-relaxed text-muted-foreground">
+          Just outside these areas? Reach out anyway — as the founding client
+          list grows, so does the map. Licensed subcontractor work (electrical,
+          plumbing) is coordinated locally to whichever region your home is in.
+        </div>
+
+        <a href="/#quote" class="btn-dark mt-8 inline-flex px-6 py-3 text-sm">Check if we serve your address</a>
+      </div>
+    </main>
+    <Footer />
+  </div>
+</Layout>
