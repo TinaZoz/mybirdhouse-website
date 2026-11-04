@@ -70,6 +70,8 @@ const showcases = [
                 <button type="button" class="assistant-zoom block h-full w-full cursor-zoom-in" data-index={showcases.indexOf(s)} aria-label={`Enlarge: ${s.caption}`}>
                   <img
                     src={`/images/assistant/${s.img}`}
+                    loading="lazy"
+                    decoding="async"
                     alt={s.caption}
                     class="h-full w-full object-cover"
                     draggable="false"
