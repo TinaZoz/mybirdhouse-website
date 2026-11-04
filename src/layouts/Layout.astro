@@ -11,6 +11,8 @@ const {
   title = 'My Birdhouse — Smart Living. Naturally.',
   description = 'AI-automated smart homes across British Columbia — energy, comfort and safety that quietly run themselves. Transparent one-time pricing, hardware at cost.',
 } = Astro.props;
+
+const fontsUrl = 'https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Caveat:wght@500;600;700&display=swap';
 ---
 
 <!doctype html>
@@ -26,9 +28,31 @@ const {
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/images/hero-banner-desktop.jpg" />
+    <meta property="og:image" content={new URL('/og-image.jpg', Astro.site)} />
     <meta property="og:type" content="website" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+
+    <link rel="preload" as="image" href="/images/hero-banner-mobile.jpg" media="(max-width: 639px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/hero-banner-desktop.jpg" media="(min-width: 640px)" fetchpriority="high" />
+    <!-- Web fonts wait until the page has loaded, so they never compete with the main photo on slow connections -->
+    <script is:inline define:vars={{ fontsUrl }}>
+      function addFonts() {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = fontsUrl;
+        document.head.appendChild(link);
+      }
+      try {
+        if (sessionStorage.getItem('fonts')) addFonts();
+        else addEventListener('load', function () {
+          addFonts();
+          sessionStorage.setItem('fonts', '1');
+        });
+      } catch (e) {
+        addFonts();
+      }
+    </script>
+    <noscript><link rel="stylesheet" href={fontsUrl} /></noscript>
 
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
